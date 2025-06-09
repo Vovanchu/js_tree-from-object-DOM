@@ -22,25 +22,22 @@ const tree = document.querySelector('#tree');
 
 function createTree(element, data) {
   const ul = document.createElement('ul');
+  const keys = Object.keys(data);
 
-  for (const key in data) {
+  if (keys.length === 0) {
+    return;
+  }
+
+  keys.forEach((key) => {
     const li = document.createElement('li');
 
     li.textContent = key;
 
-    if (
-      typeof data[key] === 'object' &&
-      data[key] !== null &&
-      Object.keys(data[key]).length > 0
-    ) {
-      createTree(li, data[key]); // додаємо підсписок
-    }
+    createTree(li, data[key]);
 
-    ul.appendChild(li);
-  }
-
-  element.appendChild(ul);
+    ul.append(li);
+    element.append(ul);
+  });
 }
 
-// Виклик:
 createTree(tree, food);
